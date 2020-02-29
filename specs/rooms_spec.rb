@@ -65,9 +65,9 @@ class TestRoom < MiniTest::Test
     @room1.move_queue_to_current
     assert_equal("Pub Feed", @room1.current_song.first)
   end
-  # def test_add_song_to_queue
-  #     @room1.add_song_to_queue(@song4)
-  #     assert_equal("Pub Feed", @room1.queued_songs)
-  # end
+
+  def test_duration
+
+  end
 
 end

@@ -15,6 +15,7 @@ attr_accessor :queued_songs
     @available_songs = available_songs
     @current_song = []
     @queued_songs = []
+    @occupance = []
   end
 
   def add_song_to_queue(song)
@@ -23,7 +24,12 @@ attr_accessor :queued_songs
 
   def move_queue_to_current
     @current_song << @queued_songs.first.track
+    puts "Now Playing #{current_song}!!"
     # binding.pry
+  end
+
+  def duration_timer(booking, queue)
+    if booking >= @songs.reduce(0) {|total, song| song.duration}
   end
 
 end

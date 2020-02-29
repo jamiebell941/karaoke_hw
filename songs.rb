@@ -13,4 +13,6 @@ attr_reader :track, :artist, :duration, :times_played
     return @songs.find {|song| song.track == name}
   end
 
+  
+
 end

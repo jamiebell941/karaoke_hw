@@ -11,4 +11,8 @@ attr_accessor :wallet, :drunkeness
     @drunkeness = drunkeness
   end
 
+  def reduce_wallet(amount)
+   @wallet -= amount
+   end
+
 end
