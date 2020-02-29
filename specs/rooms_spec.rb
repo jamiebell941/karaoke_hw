@@ -1,4 +1,4 @@
-
+require "pry"
 require('minitest/autorun')
 require('minitest/reporters')
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
@@ -27,7 +27,7 @@ class TestRoom < MiniTest::Test
        @song8, @song9, @song10, @song11, @song12]
 
        @room1 = Room.new(1, 4, 15, 1800, @songs)
-       @room2 = Room.new(2, 6, 20, 1800, @songs)
+       @room2 = Room.new(2, 6, 20, 1800, @songs, )
        @room3 = Room.new(3, 8, 25, 1800, @songs)
   end
 
@@ -59,8 +59,11 @@ class TestRoom < MiniTest::Test
 
   def test_move_queue_to_current
     @room1.add_song_to_queue(@song4)
-    @room1.move_queue_to_current(@queued_songs)
-    assert_equal("Pub Feed", @room1.current_song.first.track)
+    @room1.add_song_to_queue(@song3)
+    @room1.add_song_to_queue(@song2)
+    assert_equal("Pub Feed", @room1.queued_songs.first.track)
+    @room1.move_queue_to_current
+    assert_equal("Pub Feed", @room1.current_song.first)
   end
   # def test_add_song_to_queue
   #     @room1.add_song_to_queue(@song4)
