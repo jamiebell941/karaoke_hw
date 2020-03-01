@@ -6,10 +6,14 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 require_relative("../rooms")
 require_relative("../songs")
 require_relative("../guests")
+require_relative("../bar")
 
 class TestRoom < MiniTest::Test
 
   def setup
+
+      @bar1 = Bar.new(1000, [], [])
+
 
     @guest1 = Guest.new("John", 32, "Bohemian Rhapsody", 300, 0)
     @guest2 = Guest.new("Jasper", 29, "Sunshine on Leith", 200, 0)
@@ -91,6 +95,23 @@ class TestRoom < MiniTest::Test
   end
 
   def test_check_in
+    @room1.check_in(@guest1)
     assert_equal(1, @room1.occupance.length)
-    assert_equal("John", @room1.occupance.first)
+    assert_equal("John", @room1.occupance.last.name)
+  end
+
+  def test_check_in_room_full
+    @room1.check_in(@guest1)
+    @room1.check_in(@guest2)
+    @room1.check_in(@guest3)
+    @room1.check_in(@guest4)
+    @room1.check_in(@guest1)
+    assert_equal(4, @room1.occupance.length)
+  end
+
+  def test_check_in_cant_afford
+    @room3.check_in(@guest2)
+    assert("Sorry, that room is too much")
+  end
+
 end

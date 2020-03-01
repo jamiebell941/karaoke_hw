@@ -33,17 +33,32 @@ attr_accessor :queued_songs, :occupance
     # binding.pry
   end
 
-  # def check_out(guest)
-  #  if @occupants.include?(guest)
-  #    @occupants.delete(guest)
-  #  else
-  #    puts
+  def check_in(guest)
+    unless @occupance.count == @room_size
+      if guest.wallet >= @room_price
+        guest.reduce_wallet(@room_price)
+        @occupance << guest
+      elsif guest.wallet < @room_price
+        return  puts "Sorry, that room is too much"
+      end
+        return
+      end
+       puts "The room is full, sorry"
+    end
 
 
 
 
 
   end
+
+
+
+
+
+
+
+
   # def duration_timer(booking, queue)
   #   if booking >= @songs.reduce(0) {|total, song| song.duration}
   # end
