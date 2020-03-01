@@ -29,7 +29,13 @@ attr_accessor :queued_songs, :occupance
   end
 
   def fill_room(party)
-    @occupance.concat(party)
+    if party.count <= @room_size
+      @occupance.concat(party)
+    elsif party.count >= @room_size
+     puts "Your party will need a larger room"
+   else party.count > 8
+     puts "Sorry we don't have a room big enough"
+    end
     # binding.pry
   end
 
@@ -45,6 +51,26 @@ attr_accessor :queued_songs, :occupance
       end
        puts "The room is full, sorry"
     end
+
+    def check_out(guest)
+      if @occupance.count > 0
+      @occupance.delete(guest)
+      end
+    end
+
+    def get_total_wallet
+        @Jparty.reduce(0) {|total, party | party.wallet + total}
+    end
+
+    # def party_wallet(party)
+    #   total = 0
+    #   @JParty.reduce(0) {|total, guest| guest.wallet + total}
+    #   return total
+    # end
+
+    # def party_check_in(party)
+    #   if party.count =
+
 
 
 

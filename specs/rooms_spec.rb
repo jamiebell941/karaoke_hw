@@ -33,6 +33,9 @@ class TestRoom < MiniTest::Test
     @Pulp_Party = [@Tim_Roth, @Bruce_Willis, @John_Travolta, @Sam_Jackson,
       @Uma_Therman, @Harvey_Keitel, @Christopher_Walken]
 
+    @Party2 = [@Tim_Roth, @Bruce_Willis, @John_Travolta, @Sam_Jackson,
+      @Uma_Therman, @Harvey_Keitel, @Christopher_Walken, @guest1, @guest2]
+
 
     @song1 = Song.new("Smoko", "The Chats", 179, 0)
     @song2 = Song.new("Bus Money", "The Chats", 158, 0)
@@ -94,10 +97,23 @@ class TestRoom < MiniTest::Test
     assert_equal(4, @room1.occupance.count)
   end
 
+  def test_fill_room__bigger_room
+    @room1.fill_room(@Pulp_Party)
+    assert("Your party will need a larger room")
+  end
+
+  def test_fill_room__no_room_available
+    @room3.fill_room(@Party2)
+    assert("Sorry we don't have a room big enough")
+  end
+
+
+
   def test_check_in
     @room1.check_in(@guest1)
     assert_equal(1, @room1.occupance.length)
     assert_equal("John", @room1.occupance.last.name)
+    assert_equal(150, @guest1.wallet)
   end
 
   def test_check_in_room_full
@@ -113,5 +129,26 @@ class TestRoom < MiniTest::Test
     @room3.check_in(@guest2)
     assert("Sorry, that room is too much")
   end
+
+  def test_check_out
+    @room1.check_in(@guest1)
+    @room1.check_out(@guest1)
+    assert_equal(0, @room1.occupance.count)
+  end
+
+  # def test_party_wallet
+  #   result = party_wallet(@JParty)
+  #   assert_equal(930, result)
+  # end
+
+  # def test_party_check_in
+  #   @room1.party_check_in(@JParty)
+  #   assert_equal(4, @room1.occupance.count)
+  # end
+
+#   def test_total_wallet
+#   result = @JParty.get_total_wallet
+#   assert_equal(930, result)
+# end
 
 end
