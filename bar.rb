@@ -1,3 +1,5 @@
+require_relative("./rooms")
+
 class Bar
 
   attr_reader :drinks
@@ -13,9 +15,10 @@ class Bar
     @till += amount
   end
 
-  def guest_buys_room(guest, room)
-    increase_till(room.room_price)
-    guest.reduce_wallet(room.room_price)
-  end
+  # def guest_buys_room(guest, room)
+  #   increase_till()
+  #   guest.reduce_wallet()
+  # end
+
 
 end

@@ -5,10 +5,29 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 require_relative("../rooms")
 require_relative("../songs")
+require_relative("../guests")
 
 class TestRoom < MiniTest::Test
 
   def setup
+
+    @guest1 = Guest.new("John", 32, "Bohemian Rhapsody", 300, 0)
+    @guest2 = Guest.new("Jasper", 29, "Sunshine on Leith", 200, 0)
+    @guest3 = Guest.new("Jonah", 30, "Pub Feed", 250, 0)
+    @guest4 = Guest.new("Jim", 31, "Identity Theft", 180, 0)
+
+    @JParty = [@guest1, @guest2, @guest3, @guest4]
+
+    @Tim_Roth = Guest.new("Tim Roth", 44, "Electric Avenue", 3000, 0)
+    @Bruce_Willis = Guest.new("Bruce Willis", 51, "Don't Stop Me Now", 500, 0)
+    @John_Travolta = Guest.new("John Travolta", 48 , "Bohemian Rhapsody", 500, 0)
+    @Sam_Jackson = Guest.new("Sam Jackson", 52, "Killing in the Name", 810, 0)
+    @Uma_Therman= Guest.new("Uma Therman", 49 , "Killing in the Name", 1000, 0)
+    @Harvey_Keitel= Guest.new("Harvey Keitel", 80, "Killing in the Name", 30, 0)
+    @Christopher_Walken = Guest.new("Christopher Walken", 76, "Killing in the Name", 600, 0)
+
+    @Pulp_Party = [@Tim_Roth, @Bruce_Willis, @John_Travolta, @Sam_Jackson,
+      @Uma_Therman, @Harvey_Keitel, @Christopher_Walken]
 
 
     @song1 = Song.new("Smoko", "The Chats", 179, 0)
@@ -26,9 +45,9 @@ class TestRoom < MiniTest::Test
     @songs = [@song1, @song2, @song3, @song4, @song5, @song6, @song7,
        @song8, @song9, @song10, @song11, @song12]
 
-       @room1 = Room.new(1, 4, 15, 1800, @songs)
-       @room2 = Room.new(2, 6, 20, 1800, @songs, )
-       @room3 = Room.new(3, 8, 25, 1800, @songs)
+       @room1 = Room.new(1, 4, 150, 1800, @songs)
+       @room2 = Room.new(2, 6, 200, 1800, @songs, )
+       @room3 = Room.new(3, 8, 250, 1800, @songs)
   end
 
   def test_get_room_number
@@ -40,7 +59,7 @@ class TestRoom < MiniTest::Test
   end
 
   def test_get_room_price
-      assert_equal(25, @room3.room_price)
+      assert_equal(250, @room3.room_price)
   end
 
   def test_get_queue
@@ -66,8 +85,12 @@ class TestRoom < MiniTest::Test
     assert_equal("Pub Feed", @room1.current_song.first)
   end
 
-  def test_duration
-
+  def test_fill_room
+    @room1.fill_room(@JParty)
+    assert_equal(4, @room1.occupance.count)
   end
 
+  def test_check_in
+    assert_equal(1, @room1.occupance.length)
+    assert_equal("John", @room1.occupance.first)
 end

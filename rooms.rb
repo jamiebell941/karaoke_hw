@@ -4,7 +4,7 @@ include Enumerable
 
 require("pry")
 attr_reader :room_number, :room_size, :room_price, :booked_duration, :current_song, :available_songs
-attr_accessor :queued_songs
+attr_accessor :queued_songs, :occupance
 
   def initialize(room_number, room_size, room_price,
       booked_duration, available_songs, current_song = "No Song Playing " || [], queued_songs = [])
@@ -28,8 +28,22 @@ attr_accessor :queued_songs
     # binding.pry
   end
 
-  def duration_timer(booking, queue)
-    if booking >= @songs.reduce(0) {|total, song| song.duration}
+  def fill_room(party)
+    @occupance.concat(party)
+    # binding.pry
   end
 
-end
+  # def check_out(guest)
+  #  if @occupants.include?(guest)
+  #    @occupants.delete(guest)
+  #  else
+  #    puts
+
+
+
+
+
+  end
+  # def duration_timer(booking, queue)
+  #   if booking >= @songs.reduce(0) {|total, song| song.duration}
+  # end
