@@ -52,9 +52,9 @@ class TestRoom < MiniTest::Test
     @songs = [@song1, @song2, @song3, @song4, @song5, @song6, @song7,
        @song8, @song9, @song10, @song11, @song12]
 
-       @room1 = Room.new(1, 4, 150, 1800, @songs)
-       @room2 = Room.new(2, 6, 200, 1800, @songs, )
-       @room3 = Room.new(3, 8, 250, 1800, @songs)
+       @room1 = Room.new(1, 4, 150, 1800, @songs, 1000)
+       @room2 = Room.new(2, 6, 200, 1800, @songs, 1000)
+       @room3 = Room.new(3, 8, 250, 1800, @songs, 1000)
   end
 
   def test_get_room_number
@@ -126,7 +126,7 @@ class TestRoom < MiniTest::Test
   end
 
   def test_check_in_cant_afford
-    @room3.check_in(@guest2)
+       @room3.check_in(@guest2)
     assert("Sorry, that room is too much")
   end
 
@@ -134,6 +134,11 @@ class TestRoom < MiniTest::Test
     @room1.check_in(@guest1)
     @room1.check_out(@guest1)
     assert_equal(0, @room1.occupance.count)
+  end
+
+  def test_check_out_empty
+    @room1.check_out(@guest1)
+      assert("This room is empty now")
   end
 
   # def test_party_wallet
@@ -146,9 +151,7 @@ class TestRoom < MiniTest::Test
   #   assert_equal(4, @room1.occupance.count)
   # end
 
-#   def test_total_wallet
-#   result = @JParty.get_total_wallet
-#   assert_equal(930, result)
-# end
+
+
 
 end

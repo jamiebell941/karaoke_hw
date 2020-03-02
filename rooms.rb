@@ -1,13 +1,13 @@
+require("pry")
+
 class Room
 
-include Enumerable
-
-require("pry")
-attr_reader :room_number, :room_size, :room_price, :booked_duration, :current_song, :available_songs
+# include Enumerable
+attr_reader :room_number, :room_size, :room_price, :booked_duration, :current_song, :available_songs, :till
 attr_accessor :queued_songs, :occupance
 
   def initialize(room_number, room_size, room_price,
-      booked_duration, available_songs, current_song = "No Song Playing " || [], queued_songs = [])
+      booked_duration, available_songs, current_song = "No Song Playing " || [], queued_songs = [], till)
     @room_number = room_number
     @room_size = room_size
     @room_price = room_price
@@ -16,6 +16,7 @@ attr_accessor :queued_songs, :occupance
     @current_song = []
     @queued_songs = []
     @occupance = []
+    @till = till
   end
 
   def add_song_to_queue(song)
@@ -30,36 +31,37 @@ attr_accessor :queued_songs, :occupance
 
   def fill_room(party)
     if party.count <= @room_size
-      @occupance.concat(party)
-    elsif party.count >= @room_size
-     puts "Your party will need a larger room"
-   else party.count > 8
-     puts "Sorry we don't have a room big enough"
-    end
-    # binding.pry
+        @occupance.concat(party)
+      elsif party.count >= @room_size
+        puts "Your party will need a larger room"
+      else party.count > 8
+        puts "Sorry we don't have a room big enough"
+      end
   end
 
   def check_in(guest)
     unless @occupance.count == @room_size
       if guest.wallet >= @room_price
-        guest.reduce_wallet(@room_price)
-        @occupance << guest
+          guest.reduce_wallet(@room_price)
+          @till += (@room_price)
+          @occupance << guest
       elsif guest.wallet < @room_price
         return  puts "Sorry, that room is too much"
       end
         return
-      end
-       puts "The room is full, sorry"
     end
+  end
 
     def check_out(guest)
       if @occupance.count > 0
-      @occupance.delete(guest)
+          @occupance.delete(guest)
+      elsif @occupance.count == 0
+          puts "This room is empty now"
       end
     end
 
-    def get_total_wallet
-        @Jparty.reduce(0) {|total, party | party.wallet + total}
+    def increase_till(amount)
+      @till += amount
     end
 
     # def party_wallet(party)
@@ -69,15 +71,8 @@ attr_accessor :queued_songs, :occupance
     # end
 
     # def party_check_in(party)
-    #   if party.count =
-
-
-
-
-
-
-  end
-
+    #
+end
 
 
 
